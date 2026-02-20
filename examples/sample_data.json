@@ -1,0 +1,141 @@
+{
+  "description": "小説スペクトラムアナライザー サンプルデータ（4作品の第1話比較）",
+  "note": "実在する作品を匿名化したものです。自分の作品で同じ分析を行い、このデータと比較できます。",
+  "works": [
+    {
+      "id": "A",
+      "label": "作品A（インスト型）",
+      "genre": "現代ドラマ / ヒューマンドラマ",
+      "episode1": {
+        "chars": 3175,
+        "vocab_density": 1.68,
+        "emotion_density": 21.1,
+        "body_density": 9.4,
+        "dialogue_rate": 13.0,
+        "punctuation_rate": 13.8,
+        "avg_sentence_length": 6.4,
+        "kanji_rate": 23.1,
+        "dialogue": {
+          "count": 35,
+          "avg_length": 9.8,
+          "median_length": 6,
+          "short_rate": 57.1,
+          "long_rate": 0.0
+        },
+        "emotion_categories": {
+          "joy": 8, "sadness": 20, "anxiety": 8,
+          "anger": 4, "surprise": 13, "resolve": 2, "silence": 12
+        },
+        "body_categories": {
+          "heart": 6, "hand": 6, "eye": 2,
+          "head": 10, "breath": 5, "temperature": 1
+        },
+        "music_genre": "J-Rock（ポストロック / インスト）",
+        "audio_character": "ギター主体。台詞は合いの手。身体描写が楽器。"
+      }
+    },
+    {
+      "id": "B",
+      "label": "作品B（J-POP型）",
+      "genre": "ラブコメ",
+      "episode1": {
+        "chars": 2432,
+        "vocab_density": 2.19,
+        "emotion_density": 9.5,
+        "body_density": 2.5,
+        "dialogue_rate": 25.6,
+        "punctuation_rate": 11.7,
+        "avg_sentence_length": 11.2,
+        "kanji_rate": 25.5,
+        "dialogue": {
+          "count": 27,
+          "avg_length": 19.2,
+          "median_length": 15,
+          "short_rate": 29.6,
+          "long_rate": 14.8
+        },
+        "emotion_categories": {
+          "joy": 4, "sadness": 3, "anxiety": 1,
+          "anger": 2, "surprise": 3, "resolve": 0, "silence": 10
+        },
+        "body_categories": {
+          "heart": 0, "hand": 2, "eye": 2,
+          "head": 0, "breath": 2, "temperature": 0
+        },
+        "music_genre": "J-POP（City Pop）",
+        "audio_character": "メロディ=会話が主体。聴きやすい。身体描写は控えめ。"
+      }
+    },
+    {
+      "id": "C",
+      "label": "作品C（ラジオトーク型）",
+      "genre": "現代ドラマ / ヒューマンドラマ",
+      "episode1": {
+        "chars": 1288,
+        "vocab_density": 4.02,
+        "emotion_density": 10.1,
+        "body_density": 0.8,
+        "dialogue_rate": 28.7,
+        "punctuation_rate": 6.5,
+        "avg_sentence_length": 11.5,
+        "kanji_rate": 26.2,
+        "dialogue": {
+          "count": 20,
+          "avg_length": 16.5,
+          "median_length": 12,
+          "short_rate": 25.0,
+          "long_rate": 0.0
+        },
+        "emotion_categories": {
+          "joy": 4, "sadness": 4, "anxiety": 0,
+          "anger": 2, "surprise": 1, "resolve": 1, "silence": 1
+        },
+        "body_categories": {
+          "heart": 0, "hand": 0, "eye": 0,
+          "head": 0, "breath": 0, "temperature": 1
+        },
+        "music_genre": "ラジオトーク / ポッドキャスト",
+        "audio_character": "BGMなし。純粋な会話の流れ。息継ぎなし。"
+      }
+    },
+    {
+      "id": "D",
+      "label": "作品D（アコースティック型）",
+      "genre": "ラブコメ / ヒューマンドラマ",
+      "episode1": {
+        "chars": 2161,
+        "vocab_density": 2.94,
+        "emotion_density": 17.6,
+        "body_density": 9.7,
+        "dialogue_rate": 34.8,
+        "punctuation_rate": 8.8,
+        "avg_sentence_length": 12.3,
+        "kanji_rate": 26.0,
+        "dialogue": {
+          "count": 24,
+          "avg_length": 28.1,
+          "median_length": 22,
+          "short_rate": 20.8,
+          "long_rate": 20.8
+        },
+        "emotion_categories": {
+          "joy": 12, "sadness": 9, "anxiety": 1,
+          "anger": 6, "surprise": 6, "resolve": 2, "silence": 2
+        },
+        "body_categories": {
+          "heart": 0, "hand": 3, "eye": 14,
+          "head": 0, "breath": 4, "temperature": 0
+        },
+        "music_genre": "J-Rock（ボーカル主体、back number型）",
+        "audio_character": "ボーカル=台詞が前面。バンドサウンド（身体描写）もしっかり。"
+      }
+    }
+  ],
+  "reference_zones": {
+    "vocab_density": {"min": 1.35, "max": 1.55, "label": "聴きやすいゾーン"},
+    "emotion_density": {"min": 15, "max": 22, "label": "適正ラウドネス"},
+    "body_density": {"min": 6, "max": 10, "label": "サブベース帯"},
+    "dialogue_rate": {"min": 15, "max": 30, "label": "ボーカル/インストバランス"},
+    "punctuation_rate": {"min": 14, "max": 18, "label": "呼吸の間"}
+  }
+}
