@@ -94,11 +94,30 @@
 
 ---
 
-## 📁 ファイル構成
+## 🔬 実例：「キッチンコンロと左手のレフトさん」
+
+実際に自作を分析した結果を [`examples/leftsan_analysis.html`](examples/leftsan_analysis.html) に収録しています。
+
+📖 原作：[カクヨムで読む](https://kakuyomu.jp/works/822139844907211323)（全5話完結）
+
+![音楽ジャンル判定](images/genre.png)
+
+### 分析で見えたこと
+
+- **身体密度が基準値の2-3倍**（平均19.4、基準6-10）。しかも75%以上が「手・指」に集中
+- **感情密度は基準値の半分以下**（平均10.8、基準15-22）。感情語を使わず手の動きだけで感情を伝えている
+- **会話率5.5%**。台詞はほぼ主人公の独り言。もう片方のキャラは一度も声を出さない
+- 音楽ジャンル判定：**ソロギター・インスト**（Steve Vai「Crying Machine」型）
+
+「数値が基準値を外れている＝個性」の好例です。
+
+---
+
 
 ```
 novel-spectrum-analyzer/
 ├── README.md                        ← このファイル
+├── images/                          ← README用スクリーンショット
 ├── dictionaries/
 │   ├── emotion_7cat.json            ← 感情語辞書（7カテゴリ・約180語）
 │   └── body_6cat.json               ← 身体反応語辞書（6カテゴリ）
@@ -112,6 +131,7 @@ novel-spectrum-analyzer/
 │   ├── step7_vocab_quality.md       ← 新出語の質的評価
 │   └── step8_crossref.md            ← クロスリファレンス比較
 ├── examples/
+│   ├── leftsan_analysis.html        ← 実例：「レフトさん」全5話分析
 │   ├── sample_data.json             ← 匿名化サンプルデータ
 │   └── sample_dashboard.html        ← サンプルダッシュボード
 └── glossary.md                      ← 音響アナロジー用語集
@@ -124,20 +144,29 @@ novel-spectrum-analyzer/
 ### STEP 1: 文章密度分析
 作品の「テクスチャ」を可視化。漢字が多ければ硬質、ひらがなが多ければ柔らかい。約物（句読点・括弧）が多ければ間が多い。
 
+![7軸スペクトラム推移](images/spectrum.png)
+
 → [プロンプト](prompts/step1_density.md)
 
 ### STEP 2: 感情・身体辞書マッチ
 7カテゴリの感情語と6カテゴリの身体反応語を辞書マッチで検出。各話の「感情カラー」と「身体で語っているか」が数値化される。
+
+![感情カテゴリ推移](images/emotion_heatmap.png)
+![身体部位ヒートマップ](images/body_heatmap.png)
 
 → [プロンプト](prompts/step2_emotion_body.md) ／ [感情語辞書](dictionaries/emotion_7cat.json) ／ [身体反応辞書](dictionaries/body_6cat.json)
 
 ### STEP 3: 台詞粒度分析
 台詞の数と長さの分布を見る。平均8字以下ならインスト型（台詞は合いの手）、25字以上ならボーカル型（台詞が物語を運ぶ）。
 
+![台詞粒度分析](images/dialogue.png)
+
 → [プロンプト](prompts/step3_dialogue.md)
 
 ### STEP 4: 新出語ダイナミクス
 各話で「初めて登場する語彙」を追跡。新出率が高い話＝新しい楽器がステージに上がった瞬間。低い話＝既存の楽器で変奏を重ねている。
+
+![新出語ダイナミクス](images/new_vocab.png)
 
 → [プロンプト](prompts/step4_new_vocab.md)
 
@@ -158,6 +187,8 @@ novel-spectrum-analyzer/
 
 ### STEP 8: クロスリファレンス比較
 2作品を同一フレームワークで比較。自分の作品の立ち位置と個性が客観的に見える。
+
+![クロスリファレンス比較](images/radar.png)
 
 → [プロンプト](prompts/step8_crossref.md)
 
@@ -214,7 +245,6 @@ novel-spectrum-analyzer/
 - 辞書マッチは文脈を見ません（「笑う」が嘲笑か微笑かは区別できない）。STEP 5で補完します
 - 基準値はまだ少数の作品から算出したものです。使う人が増えるほど精緻化されます
 - 数値は「良い/悪い」ではなく「どこにいるか」を示す座標です
-- あくまで、AIに読み込ませても良い自作品のみでご使用ください
 
 ---
 

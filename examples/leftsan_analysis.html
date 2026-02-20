@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>「キッチンコンロと左手のレフトさん」スペクトラム分析</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:#0d1117;color:#c9d1d9;padding:16px;line-height:1.6;font-size:14px}
+  h1{text-align:center;font-size:1.2em;margin-bottom:2px;background:linear-gradient(90deg,#f0883e,#58a6ff,#bc8cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .sub{text-align:center;color:#8b949e;font-size:.76em;margin-bottom:18px}
+  .grid{display:grid;gap:14px}
+  .card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:16px;overflow:hidden}
+  .card h2{font-size:.9em;color:#58a6ff;margin-bottom:10px}
+  svg{width:100%;display:block}
+  .legend{display:flex;gap:12px;justify-content:center;font-size:.7em;margin-top:8px;flex-wrap:wrap}
+  .legend-i{display:flex;align-items:center;gap:3px}
+  .legend-d{width:10px;height:10px;border-radius:2px}
+  .insight{background:#1c2128;border-left:3px solid #58a6ff;padding:10px 14px;margin:8px 0;border-radius:0 6px 6px 0;font-size:.78em}
+  .insight strong{color:#58a6ff}
+  .insight.pink{border-left-color:#f778ba} .insight.pink strong{color:#f778ba}
+  .insight.green{border-left-color:#56d364} .insight.green strong{color:#56d364}
+  .insight.orange{border-left-color:#f0883e} .insight.orange strong{color:#f0883e}
+  .insight.purple{border-left-color:#bc8cff} .insight.purple strong{color:#bc8cff}
+  .insight.gold{border-left-color:#e3b341} .insight.gold strong{color:#e3b341}
+  .stat-row{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:8px 0}
+  .stat{background:#1c2128;border-radius:6px;padding:8px;text-align:center}
+  .stat .val{font-size:1.4em;font-weight:bold;line-height:1.2}
+  .stat .label{font-size:.65em;color:#8b949e}
+  table{width:100%;border-collapse:collapse;font-size:.72em}
+  th{text-align:left;padding:5px 4px;border-bottom:1px solid #30363d;color:#8b949e}
+  td{padding:4px;border-bottom:1px solid #21262d}
+  .n{text-align:right;font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<h1>📡「キッチンコンロと左手のレフトさん」スペクトラム分析</h1>
+<p class="sub">全5話 完全分析 — 小説スペクトラムアナライザー サンプル出力</p>
+<p style="text-align:center;margin-bottom:14px"><a href="https://kakuyomu.jp/works/822139844907211323" target="_blank" style="color:#58a6ff;text-decoration:none;font-size:.82em;border:1px solid #30363d;padding:5px 14px;border-radius:20px;display:inline-block">📖 カクヨムで本編を読む →</a></p>
+
+<div class="grid">
+
+<!-- ジャンル判定 -->
+<div class="card">
+  <h2>🎵 音楽ジャンル判定</h2>
+  <div style="text-align:center;padding:12px">
+    <div style="font-size:2em;font-weight:bold;background:linear-gradient(90deg,#f0883e,#bc8cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
+      ソロギター・インスト
+    </div>
+    <div style="font-size:.85em;color:#8b949e;margin-top:6px">
+      Steve Vai「Crying Machine」型 — ギター1本が泣いている
+    </div>
+  </div>
+  <div class="stat-row">
+    <div class="stat"><div class="val" style="color:#f0883e">19.4</div><div class="label">身体密度 平均<br>(基準6-10)</div></div>
+    <div class="stat"><div class="val" style="color:#58a6ff">10.8</div><div class="label">感情密度 平均<br>(基準15-22)</div></div>
+    <div class="stat"><div class="val" style="color:#bc8cff">5.5%</div><div class="label">会話率 平均<br>(基準15-30%)</div></div>
+    <div class="stat"><div class="val" style="color:#56d364">0.88</div><div class="label">語彙密度 平均<br>(基準1.35-1.55)</div></div>
+    <div class="stat"><div class="val" style="color:#e3b341">35.3</div><div class="label">手・指 平均出現<br>(異常値)</div></div>
+  </div>
+  <div class="insight orange">
+    <strong>身体密度が基準値の2-3倍、感情密度が基準値の半分以下。</strong>
+    感情語で感情を語らず、身体（特に「手」）の動きだけで全てを伝える。
+    これは「書かないことで描く」の極致。ギターが歌詞なしで泣いている構造。
+  </div>
+</div>
+
+<!-- 5軸推移チャート -->
+<div class="card">
+  <h2>📈 7軸スペクトラム推移（全5話）</h2>
+  <svg id="mainChart" height="280"></svg>
+  <div class="legend">
+    <div class="legend-i"><div class="legend-d" style="background:#f0883e"></div>身体密度</div>
+    <div class="legend-i"><div class="legend-d" style="background:#58a6ff"></div>感情密度</div>
+    <div class="legend-i"><div class="legend-d" style="background:#bc8cff"></div>会話率</div>
+    <div class="legend-i"><div class="legend-d" style="background:#56d364"></div>新出率</div>
+    <div class="legend-i"><div class="legend-d" style="background:#e3b341"></div>語彙密度×10</div>
+    <div class="legend-i"><div class="legend-d" style="background:rgba(86,211,100,.15);width:20px;height:8px"></div>基準帯</div>
+  </div>
+</div>
+
+<!-- 身体部位ヒートマップ -->
+<div class="card">
+  <h2>🖐️ 身体部位ヒートマップ</h2>
+  <svg id="bodyHeatmap" height="200"></svg>
+  <div class="insight pink">
+    <strong>「手・指」が全話の身体反応の75%以上を占める。</strong>
+    他の身体部位（心臓、目、頭）はほぼ使われない。
+    物語が文字通り「手だけで語っている」ことを数値が証明。
+    第4話で手・指が42回 = 48字に1回「手」が登場する計算。
+  </div>
+</div>
+
+<!-- 感情ヒートマップ -->
+<div class="card">
+  <h2>💫 感情カテゴリ推移</h2>
+  <svg id="emoHeatmap" height="230"></svg>
+  <div class="insight purple">
+    <strong>第1話は「不安」が支配的 → 第2話で「喜び」に逆転 → 第4話で「悲しみ」が最大化 → 第5話で再び「喜び」。</strong>
+    感情のアーチが美しい。第4話の悲しみのピークは戦闘形態のレフトさんのやけどに対応。
+  </div>
+</div>
+
+<!-- 台詞分析 -->
+<div class="card">
+  <h2>🎤 台詞粒度分析</h2>
+  <svg id="dialogueChart" height="180"></svg>
+  <div class="stat-row">
+    <div class="stat"><div class="val" style="color:#bc8cff">43本</div><div class="label">全話台詞数</div></div>
+    <div class="stat"><div class="val" style="color:#f0883e">15.2字</div><div class="label">全体平均</div></div>
+    <div class="stat"><div class="val" style="color:#58a6ff">12字</div><div class="label">全体中央値</div></div>
+    <div class="stat"><div class="val" style="color:#56d364">35%</div><div class="label">一言率(≤8字)</div></div>
+    <div class="stat"><div class="val" style="color:#e3b341">5%</div><div class="label">長台詞率(40字+)</div></div>
+  </div>
+  <div class="insight">
+    <strong>咲希の独り言は「手への語りかけ」として機能している。</strong>
+    会話率5.5%だが、台詞のほぼ全てが一方通行の独り言。
+    レフトさんは一度も「声」を出さない。<em style="color:#f0883e">返答は全て手の動きで</em>。
+  </div>
+</div>
+
+<!-- 新出語推移 -->
+<div class="card">
+  <h2>🔤 新出語ダイナミクス</h2>
+  <svg id="newVocabChart" height="200"></svg>
+  <div class="insight green">
+    <strong>新出率の下降カーブ：100% → 84% → 73% → 66% → 62%。</strong>
+    5話完結で62%まで——毎話新しい要素を入れ続ける「開拓型」の構造。
+    5話という短さゆえに、毎話新しい要素を入れる必要があった。
+    注目すべきは第4話の新出語：「戦闘形態」「炎魔法」「冷却」「切迫感」。
+    <em style="color:#56d364">レフトさんの世界の「危険」が新語として一気に流入した</em>。
+  </div>
+</div>
+
+<!-- サマリーテーブル -->
+<div class="card">
+  <h2>📋 全話サマリー</h2>
+  <table>
+    <thead><tr>
+      <th>話</th><th>タイトル</th><th class="n">字数</th><th class="n">語彙密度</th>
+      <th class="n">感情密度</th><th class="n">身体密度</th><th class="n">会話率</th>
+      <th class="n">台詞平均</th><th class="n">新出率</th>
+    </tr></thead>
+    <tbody id="summaryBody"></tbody>
+  </table>
+</div>
+
+<!-- コンプライアンスと缶コーヒーとの比較 -->
+<div class="card">
+  <h2>🎯 クロスリファレンス：「コンプライアンスと缶コーヒー」第1話との比較</h2>
+  <svg id="radarCompare" height="300"></svg>
+  <div class="legend">
+    <div class="legend-i"><div class="legend-d" style="background:#f0883e"></div>レフトさん第1話</div>
+    <div class="legend-i"><div class="legend-d" style="background:#58a6ff"></div>コンプラ缶コーヒー第1話</div>
+    <div class="legend-i"><div class="legend-d" style="background:rgba(139,148,158,.2);width:20px;height:8px"></div>基準帯</div>
+  </div>
+  <div class="insight gold">
+    <strong>同じ作者でここまで「音」が違う。</strong>
+    コンプラ缶コーヒーは感情密度4.5、身体密度3.9、会話率40.7%、台詞平均19.0字。
+    レフトさんは感情密度9.0、身体密度15.8、会話率2.7%、台詞平均10.7字。
+    コンプラ缶コーヒーは<em style="color:#58a6ff">ラジオドラマ型（台詞が物語を運ぶ）</em>、
+    レフトさんは<em style="color:#f0883e">ソロギター・インスト（手だけが語る）</em>。
+    レーダーの形が完全に鏡像——「ボーカル全振り」と「インスト全振り」の両極。
+  </div>
+</div>
+
+<!-- 構造的発見 -->
+<div class="card">
+  <h2>💡 構造的発見</h2>
+  <div id="insights"></div>
+</div>
+
+</div>
+
+<script>
+const eps = [
+  {n:1,title:"左手と右手",chars:2791,vd:0.96,ed:9.0,bd:15.8,dr:2.7,davg:10.7,nr:100,
+   emo:{joy:4,sad:1,anx:11,ang:3,sur:2,res:0,sil:4},
+   body:{heart:0,hand:29,eye:7,head:1,breath:3,temp:4}},
+  {n:2,title:"お菓子と独り言",chars:2985,vd:0.90,ed:10.4,bd:16.8,dr:12.4,davg:20.6,nr:84.4,
+   emo:{joy:13,sad:6,anx:6,ang:1,sur:3,res:1,sil:1},
+   body:{heart:0,hand:39,eye:3,head:0,breath:2,temp:6}},
+  {n:3,title:"写真と羊皮紙",chars:2087,vd:0.90,ed:9.6,bd:19.2,dr:3.0,davg:12.6,nr:73.4,
+   emo:{joy:6,sad:6,anx:4,ang:1,sur:0,res:0,sil:3},
+   body:{heart:2,hand:33,eye:1,head:0,breath:0,temp:4}},
+  {n:4,title:"鱗とアルミホイル",chars:2023,vd:0.80,ed:13.3,bd:22.7,dr:4.4,davg:11.1,nr:65.6,
+   emo:{joy:5,sad:10,anx:8,ang:2,sur:2,res:0,sil:0},
+   body:{heart:0,hand:42,eye:0,head:0,breath:2,temp:2}},
+  {n:5,title:"右手と左手",chars:2043,vd:0.83,ed:11.7,bd:23.5,dr:5.1,davg:20.8,nr:62.0,
+   emo:{joy:9,sad:5,anx:5,ang:0,sur:3,res:2,sil:0},
+   body:{heart:3,hand:33,eye:2,head:0,breath:2,temp:8}},
+];
+
+// === Main Chart ===
+function drawMain(){
+  const svg=document.getElementById('mainChart');
+  const W=svg.clientWidth,H=280;
+  const p={t:15,r:14,b:28,l:38},cw=W-p.l-p.r,ch=H-p.t-p.b;
+  const xs=i=>p.l+i*cw/4;
+  const ys=v=>p.t+ch-v/30*ch;
+  let html='';
+  
+  // ref zone for emotion
+  html+=`<rect x="${p.l}" y="${ys(22)}" width="${cw}" height="${ys(15)-ys(22)}" fill="rgba(86,211,100,.06)" rx="2"/>`;
+  
+  for(let v=0;v<=30;v+=5){
+    html+=`<line x1="${p.l}" y1="${ys(v)}" x2="${W-p.r}" y2="${ys(v)}" stroke="#21262d"/>`;
+    html+=`<text x="${p.l-4}" y="${ys(v)+3}" fill="#484f58" font-size="8" text-anchor="end">${v}</text>`;
+  }
+  eps.forEach((d,i)=>html+=`<text x="${xs(i)}" y="${H-6}" fill="#8b949e" font-size="8" text-anchor="middle">${d.n}話</text>`);
+
+  const lines=[
+    {key:'bd',color:'#f0883e',w:3},
+    {key:'ed',color:'#58a6ff',w:2},
+    {key:'dr',color:'#bc8cff',w:1.5},
+    {key:'nr',color:'#56d364',w:1.5,scale:v=>v/100*30},
+    {key:'vd',color:'#e3b341',w:1,scale:v=>v*10},
+  ];
+  lines.forEach(l=>{
+    let path='';
+    eps.forEach((d,i)=>{
+      const v=l.scale?l.scale(d[l.key]):d[l.key];
+      path+=(i?'L':'M')+xs(i)+','+ys(v);
+    });
+    html+=`<path d="${path}" fill="none" stroke="${l.color}" stroke-width="${l.w}"/>`;
+    eps.forEach((d,i)=>{
+      const v=l.scale?l.scale(d[l.key]):d[l.key];
+      html+=`<circle cx="${xs(i)}" cy="${ys(v)}" r="3" fill="${l.color}" stroke="#161b22" stroke-width="1.5"/>`;
+    });
+  });
+
+  // annotation
+  html+=`<text x="${xs(4)+8}" y="${ys(23.5)}" fill="#f0883e" font-size="8" font-weight="bold">身体↑</text>`;
+  html+=`<text x="${xs(4)+8}" y="${ys(11.7)}" fill="#58a6ff" font-size="8">感情</text>`;
+
+  svg.innerHTML=html;
+}
+
+// === Body Heatmap ===
+function drawBodyHeatmap(){
+  const svg=document.getElementById('bodyHeatmap');
+  const W=svg.clientWidth,H=200;
+  const cats=['心臓胸','手・指','目視線','頭思考','呼吸声','温度'];
+  const keys=['heart','hand','eye','head','breath','temp'];
+  const p={l:52,t:20,r:10,b:22};
+  const cw=(W-p.l-p.r)/5,ch=(H-p.t-p.b)/6;
+  let html='';
+  
+  keys.forEach((k,ki)=>{
+    html+=`<text x="${p.l-4}" y="${p.t+ki*ch+ch/2+4}" fill="#8b949e" font-size="8" text-anchor="end">${cats[ki]}</text>`;
+    eps.forEach((d,ei)=>{
+      const v=d.body[k];
+      const maxV=42;
+      const intensity=v/maxV;
+      const r=Math.round(240*intensity+22*(1-intensity));
+      const g=Math.round(136*intensity+38*(1-intensity));
+      const b=Math.round(62*intensity+34*(1-intensity));
+      const x=p.l+ei*cw,y=p.t+ki*ch;
+      html+=`<rect x="${x+1}" y="${y+1}" width="${cw-2}" height="${ch-2}" fill="rgb(${r},${g},${b})" rx="3"/>`;
+      if(v>0) html+=`<text x="${x+cw/2}" y="${y+ch/2+4}" fill="${v>15?'#fff':'#8b949e'}" font-size="${v>20?'11':'9'}" text-anchor="middle" font-weight="${v>20?'bold':'normal'}">${v}</text>`;
+    });
+  });
+  eps.forEach((d,i)=>html+=`<text x="${p.l+i*cw+cw/2}" y="${H-4}" fill="#8b949e" font-size="8" text-anchor="middle">${d.n}話</text>`);
+  
+  svg.innerHTML=html;
+}
+
+// === Emotion Heatmap ===
+function drawEmoHeatmap(){
+  const svg=document.getElementById('emoHeatmap');
+  const W=svg.clientWidth,H=230;
+  const cats=['喜び','悲しみ','不安','怒り','驚き','覚悟','静寂'];
+  const keys=['joy','sad','anx','ang','sur','res','sil'];
+  const colors=['#f0883e','#58a6ff','#bc8cff','#f85149','#e3b341','#56d364','#8b949e'];
+  const p={l:46,t:20,r:10,b:22};
+  const cw=(W-p.l-p.r)/5,ch=(H-p.t-p.b)/7;
+  let html='';
+  
+  keys.forEach((k,ki)=>{
+    html+=`<text x="${p.l-4}" y="${p.t+ki*ch+ch/2+4}" fill="${colors[ki]}" font-size="8" text-anchor="end">${cats[ki]}</text>`;
+    eps.forEach((d,ei)=>{
+      const v=d.emo[k];
+      const maxV=13;
+      const intensity=v/maxV;
+      const x=p.l+ei*cw,y=p.t+ki*ch;
+      const c=colors[ki];
+      html+=`<rect x="${x+1}" y="${y+1}" width="${cw-2}" height="${ch-2}" fill="${c}" opacity="${Math.max(.08,intensity*.8)}" rx="3"/>`;
+      if(v>0) html+=`<text x="${x+cw/2}" y="${y+ch/2+4}" fill="${intensity>.5?'#fff':'#8b949e'}" font-size="9" text-anchor="middle">${v}</text>`;
+    });
+  });
+  eps.forEach((d,i)=>html+=`<text x="${p.l+i*cw+cw/2}" y="${H-4}" fill="#8b949e" font-size="8" text-anchor="middle">${d.n}話</text>`);
+  
+  svg.innerHTML=html;
+}
+
+// === Dialogue Chart ===
+function drawDialogue(){
+  const svg=document.getElementById('dialogueChart');
+  const W=svg.clientWidth,H=180;
+  const p={l:38,t:15,r:14,b:28};
+  const dData=[
+    {n:1,count:7,avg:10.7,med:8},
+    {n:2,count:18,avg:20.6,med:18},
+    {n:3,count:5,avg:12.6,med:12},
+    {n:4,count:8,avg:11.1,med:8},
+    {n:5,count:5,avg:20.8,med:24},
+  ];
+  const cw=W-p.l-p.r,ch=H-p.t-p.b;
+  const xs=i=>p.l+i*cw/4;
+  const ys=v=>p.t+ch-v/25*ch;
+  let html='';
+  
+  for(let v=0;v<=25;v+=5){
+    html+=`<line x1="${p.l}" y1="${ys(v)}" x2="${W-p.r}" y2="${ys(v)}" stroke="#21262d"/>`;
+    html+=`<text x="${p.l-4}" y="${ys(v)+3}" fill="#484f58" font-size="8" text-anchor="end">${v}</text>`;
+  }
+  
+  // Count as bubble size, avg as bar
+  dData.forEach((d,i)=>{
+    const x=xs(i);
+    const bw=18;
+    // avg bar
+    html+=`<rect x="${x-bw/2}" y="${ys(d.avg)}" width="${bw}" height="${ys(0)-ys(d.avg)}" fill="#bc8cff" opacity=".5" rx="2"/>`;
+    // median dot
+    html+=`<circle cx="${x}" cy="${ys(d.med)}" r="${Math.sqrt(d.count)*2.5}" fill="#f0883e" opacity=".6" stroke="#f0883e" stroke-width="1"/>`;
+    html+=`<text x="${x}" y="${ys(d.avg)-6}" fill="#bc8cff" font-size="7" text-anchor="middle">${d.avg.toFixed(0)}字</text>`;
+    html+=`<text x="${x}" y="${H-6}" fill="#8b949e" font-size="8" text-anchor="middle">${d.n}話(${d.count}本)</text>`;
+  });
+  
+  svg.innerHTML=html;
+}
+
+// === New Vocab Chart ===
+function drawNewVocab(){
+  const svg=document.getElementById('newVocabChart');
+  const W=svg.clientWidth,H=200;
+  const p={l:38,t:12,r:14,b:28},cw=W-p.l-p.r,ch=H-p.t-p.b;
+  const xs=i=>p.l+i*cw/4;
+  const ys=v=>p.t+ch-v/105*ch;
+  let html='';
+  
+  for(let v=0;v<=100;v+=20){
+    html+=`<line x1="${p.l}" y1="${ys(v)}" x2="${W-p.r}" y2="${ys(v)}" stroke="#21262d"/>`;
+    html+=`<text x="${p.l-4}" y="${ys(v)+3}" fill="#484f58" font-size="8" text-anchor="end">${v}%</text>`;
+  }
+  
+  let path='',area='';
+  eps.forEach((d,i)=>{
+    path+=(i?'L':'M')+xs(i)+','+ys(d.nr);
+    area+=(i?'L':'M')+xs(i)+','+ys(d.nr);
+  });
+  area+=`L${xs(4)},${ys(0)}L${xs(0)},${ys(0)}Z`;
+  html+=`<path d="${area}" fill="rgba(86,211,100,.08)"/>`;
+  html+=`<path d="${path}" fill="none" stroke="#56d364" stroke-width="2.5"/>`;
+  eps.forEach((d,i)=>{
+    html+=`<circle cx="${xs(i)}" cy="${ys(d.nr)}" r="4" fill="#56d364" stroke="#161b22" stroke-width="2"/>`;
+    html+=`<text x="${xs(i)}" y="${ys(d.nr)-8}" fill="#56d364" font-size="8" text-anchor="middle" font-weight="bold">${d.nr.toFixed(0)}%</text>`;
+    html+=`<text x="${xs(i)}" y="${H-6}" fill="#8b949e" font-size="8" text-anchor="middle">${d.n}話</text>`;
+  });
+  
+  svg.innerHTML=html;
+}
+
+// === Radar Compare ===
+function drawRadar(){
+  const svg=document.getElementById('radarCompare');
+  const W=svg.clientWidth,H=300,cx=W/2,cy=150,R=110;
+  const axes=['感情密度','身体密度','会話率','語彙密度','台詞長'];
+  const n=5;
+  let html='';
+  
+  for(let r=.25;r<=1;r+=.25){
+    let path='';
+    for(let i=0;i<n;i++){
+      const a=-Math.PI/2+2*Math.PI*i/n;
+      path+=(i?'L':'M')+(cx+R*r*Math.cos(a))+','+(cy+R*r*Math.sin(a));
+    }
+    html+=`<path d="${path}Z" fill="none" stroke="#21262d"/>`;
+  }
+  for(let i=0;i<n;i++){
+    const a=-Math.PI/2+2*Math.PI*i/n;
+    html+=`<line x1="${cx}" y1="${cy}" x2="${cx+R*Math.cos(a)}" y2="${cy+R*Math.sin(a)}" stroke="#30363d"/>`;
+    html+=`<text x="${cx+(R+20)*Math.cos(a)}" y="${cy+(R+20)*Math.sin(a)+4}" fill="#8b949e" font-size="9" text-anchor="middle">${axes[i]}</text>`;
+  }
+  
+  // Left-san ep1: ed9.0, bd15.8, dr2.7, vd0.96, davg10.7
+  // Compla ep1:   ed4.5, bd3.9,  dr40.7,vd1.20, davg19.0
+  const works=[
+    {label:'レフトさん',color:'#f0883e',vals:[9.0/30,15.8/25,2.7/45,0.96/5,10.7/35]},
+    {label:'コンプラ缶',color:'#58a6ff',vals:[4.5/30,3.9/25,40.7/45,1.20/5,19.0/35]},
+  ];
+  
+  works.forEach(w=>{
+    let path='';
+    for(let i=0;i<n;i++){
+      const a=-Math.PI/2+2*Math.PI*i/n;
+      const v=Math.min(1,w.vals[i]);
+      path+=(i?'L':'M')+(cx+R*v*Math.cos(a))+','+(cy+R*v*Math.sin(a));
+    }
+    html+=`<path d="${path}Z" fill="${w.color}" fill-opacity=".1" stroke="${w.color}" stroke-width="2"/>`;
+    for(let i=0;i<n;i++){
+      const a=-Math.PI/2+2*Math.PI*i/n;
+      const v=Math.min(1,w.vals[i]);
+      html+=`<circle cx="${cx+R*v*Math.cos(a)}" cy="${cy+R*v*Math.sin(a)}" r="3" fill="${w.color}"/>`;
+    }
+  });
+  
+  svg.innerHTML=html;
+}
+
+// === Summary Table ===
+document.getElementById('summaryBody').innerHTML=eps.map(d=>`<tr>
+  <td class="n">${d.n}</td><td>${d.title}</td><td class="n">${d.chars}</td>
+  <td class="n">${d.vd.toFixed(2)}</td>
+  <td class="n" style="color:#58a6ff">${d.ed.toFixed(1)}</td>
+  <td class="n" style="color:#f0883e;font-weight:bold">${d.bd.toFixed(1)}</td>
+  <td class="n">${d.dr.toFixed(1)}%</td>
+  <td class="n">${d.davg.toFixed(1)}</td>
+  <td class="n" style="color:#56d364">${d.nr.toFixed(1)}%</td>
+</tr>`).join('');
+
+// === Insights ===
+document.getElementById('insights').innerHTML=`
+  <div class="insight orange">
+    <strong>身体密度が全話で右肩上がり（15.8→16.8→19.2→22.7→23.5）。</strong>
+    これは「手」が物語が進むにつれて<strong>より多くの意味を担うようになった</strong>証拠。
+    最初は「壁から生えてる不思議な手」だったものが、
+    最後は「離れたくない手」「温かい手」「種を握る手」に変わる。
+    同じ「手」なのに、文脈が変わるだけで密度が上がっている。
+  </div>
+  <div class="insight pink">
+    <strong>「手・指」の出現回数：29→39→33→42→33＝全5話で176回。</strong>
+    全文字数11,929字に対して176回。<strong>68字に1回「手」が登場する</strong>。
+    これは通常の小説では考えられない密度。
+    しかし読んでいて「手」という字が目につくことはない——
+    なぜなら毎回<strong>違う動き</strong>をしているから。
+    「ワシワシ」「ぱたぱた」「ぎゅっと」「ふにゃり」「ぶんぶん」——
+    手の動きのバリエーションが語彙的単調さを防いでいる。
+  </div>
+  <div class="insight purple">
+    <strong>感情密度が低いのに感情的な作品である理由。</strong>
+    感情語（嬉しい、悲しい、怖い等）を直接使わず、
+    代わりに<strong>手の動きの描写で感情を推測させる</strong>構造。
+    「しょんぼりとうなだれた」「ぎゅっと握り返してきた」「指先がふにゃりと力なく垂れた」——
+    これらは感情辞書にはマッチしないが、読者は感情を受け取る。
+    <strong>「書かないことで描く」が最も徹底された作品</strong>。
+  </div>
+  <div class="insight green">
+    <strong>語彙密度0.88（基準1.35-1.55の半分）＝ 極めて柔らかいテクスチャ。</strong>
+    ひらがなが多く、漢字が少ない。
+    これは「手から伝わる感覚」を描くのにひらがなの柔らかさが合っているから。
+    「じんわり」「ふにゃり」「きゅっと」——全てひらがなのオノマトペ。
+    硬質な漢字熟語ではなく、<strong>触覚的な言葉</strong>で構成されている。
+  </div>
+  <div class="insight gold">
+    <strong>「コンプライアンスと缶コーヒー」との比較で見えた「式守芽衣の振れ幅」。</strong>
+    2作品の対比：<br>
+    ① レフトさん：会話率2.7% / コンプラ缶：会話率40.7%（15倍の差）<br>
+    ② レフトさん：身体密度15.8 / コンプラ缶：身体密度3.9（4倍の差）<br>
+    ③ レフトさん：台詞平均10.7字 / コンプラ缶：台詞平均19.0字<br>
+    ④ 共通点：感情語に頼らない（両方とも感情密度が基準値の半分以下）<br><br>
+    レフトさんは<strong>「手」で語るインスト</strong>、コンプラ缶は<strong>「台詞」で語るラジオドラマ</strong>。
+    楽器編成は真逆だが、「感情語を控えめにして、別の手段で伝える」点は共通。
+    <strong>「感情を直接書かない作家」</strong>——これが式守芽衣のスペクトル署名。
+  </div>
+`;
+
+window.addEventListener('load',()=>{drawMain();drawBodyHeatmap();drawEmoHeatmap();drawDialogue();drawNewVocab();drawRadar()});
+window.addEventListener('resize',()=>{drawMain();drawBodyHeatmap();drawEmoHeatmap();drawDialogue();drawNewVocab();drawRadar()});
+</script>
+</body>
+</html>
